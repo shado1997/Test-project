@@ -1,0 +1,28 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<center><h1>Delete Group</h1>
+
+<p>Are you sure you want to delete the group: {{ group_name }}?</p>
+
+<form action="" method="POST">
+  {% csrf_token %}
+  <input type="submit" action="" value="Yes, delete." />
+</form>
+{% if messages %}
+        <center>
+            {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+
+            <h2 id="message_success"> {{ message }}</h2>
+
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <h2 id="message_error">{{ message }}</h2>
+            {% endif %}
+            {% endfor %}
+        </center>
+        {% endif %}
+</center>
+
+{% endblock %}

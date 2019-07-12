@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  {% block title %}<title>Test project</title>{% endblock %}
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+  
+  <!-- Добавление дополнительного статического CSS файла -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+
+  <ul>
+    <li><a href="http://127.0.0.1:8000/list_of_users">Users</a></li>
+    <li><a href="http://127.0.0.1:8000/list_of_groups">Groups</a></li>
+    <li style="float:right"><a class="active" href="http://127.0.0.1:8000/users/create/">Add user</a></li>
+    <li style="float:right"><a class="active" href="http://127.0.0.1:8000/groups/create/">Add group</a></li>
+  </ul>
+
+      {% block content %}{% endblock %}
+    
+</body>
+</html>

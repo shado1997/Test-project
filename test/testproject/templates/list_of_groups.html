@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<center><h1>List of groups</h1></center>
+
+<table cellpadding="10" border="3" align="center">
+  {% if groups_list %}
+    
+    <tr>
+            <th>ID</th>
+            <th>Names</th>
+            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+           </tr><br>
+      
+    
+           {% for groups in groups_list %}
+         
+         <tr><td>{{groups.id}}</td> <td>{{groups.name}}</td> <td>{{groups.description}}</td><td><button onclick="window.location.href='groups/{{groups.id}}/update/'">Edit</button></td><td><button onclick="window.location.href='groups/{{groups.id}}/delete/'">Delete</button></td></tr><br>
+         
+         {% endfor %}
+    
+       
+       {% else %}
+         <p>Ooooops, something went wrong.</p>
+       {% endif %} 
+    
+    </table>
+{% endblock %}

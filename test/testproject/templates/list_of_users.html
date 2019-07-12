@@ -1,0 +1,30 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<center><h1>List of users</h1></center>
+
+<table cellpadding="10" border="3" align="center">
+    {% if users_list %}
+    
+    <tr>
+            <th>Name</th>
+            <th>Group</th>
+            <th>Date of registration</th>
+            <th>Edit</th>
+            <th>Delete</th>
+           </tr><br>
+      
+    
+         {% for users in users_list %}
+         
+         <tr><td>{{ users.name }}</td> <td>{{users.group}}</td> <td>{{users.created}}</td><td><button onclick="window.location.href='user/{{users.id}}/update/'">Edit</button></td><td><button onclick="window.location.href='users/{{users.id}}/delete/'">Delete</button></td></tr><br>
+         
+         {% endfor %}
+    
+       
+       {% else %}
+       <p>Ooooops, something went wrong.</p>
+       {% endif %} 
+    
+    </table>
+{% endblock %}
