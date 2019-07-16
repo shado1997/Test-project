@@ -14,7 +14,7 @@
 </head>
 
 <body>
-
+  <div id="like_button_container"></div>
   <ul>
     <li><a href="http://127.0.0.1:8000/list_of_users">Users</a></li>
     <li><a href="http://127.0.0.1:8000/list_of_groups">Groups</a></li>
@@ -23,6 +23,8 @@
   </ul>
 
       {% block content %}{% endblock %}
-    
+      <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+      <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+      <script src="/test/testproject/static/js/like_button.js"></script>
 </body>
 </html>

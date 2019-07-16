@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.contrib import messages
+import re 
 
 class UsersListView(generic.ListView):
     model = Users
@@ -41,10 +42,14 @@ class GroupsUpdate(UpdateView):
 
 def update_user(request, pk):
     user_inst=get_object_or_404(Users, id = pk)
-    user_ip = str(user_inst)
-    baba = user_ip.split(sep=None, maxsplit=-1)[2]
-    bob = baba.split('(')[1]
-    user_id = bob.split(')')[0]
+    unparsed_user_id = str(user_inst)
+    spliting_user_id_1 = unparsed_user_id.split(sep=None, maxsplit=-1)[2]
+    spliting_user_id_2 = spliting_user_id_1.split('(')[1]
+    user_id = spliting_user_id_2.split(')')[0]
+    queryset_of_user_name = Users.objects.filter(id=user_id).values_list('name')[0][0]
+    user_group_id = Users.objects.filter(id=user_id).values_list('group')[0][0]
+    string_user_name = str(queryset_of_user_name)
+    user_name = re.split(',()',string_user_name)[0]  
     if request.method == 'POST':
         form = UpdateUserForm(request.POST)
         if form.is_valid():
@@ -54,8 +59,10 @@ def update_user(request, pk):
             Users.objects.filter(id=user_id).update(name=name, group=group)
             return redirect('list_of_users')
         return HttpResponse("Invalid data", status=400)
-    form = UpdateUserForm()
-    return render(request, 'update_user.html', {'form': form})
+    form = UpdateUserForm(initial={'name': user_name, 'group':user_group_id})
+    context = {'name':user_name, 'form':form}
+    return render(request, 'update_user.html', context)
+
 
 def create_user(request):
     if request.method == 'POST':
@@ -78,7 +85,7 @@ def delete_group(request, pk):
         lenght_of_empty_group = 15
         if len(string_res) < lenght_of_empty_group:
             Groups.objects.get(name=group_name).delete()
-            redirect('list_of_groups')
+            return redirect('list_of_groups ')
         else:
             messages.error(request, "At list one member already in this group")
     HttpResponse("Invalid data", status=400)
